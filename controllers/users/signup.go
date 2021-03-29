@@ -6,18 +6,19 @@ import (
 	"encoding/hex"
 	"github.com/gnshjoo/Dev-DB/DB"
 	"github.com/gnshjoo/Dev-DB/controllers/token"
+	"github.com/gnshjoo/Dev-DB/models"
 	"log"
 	"time"
 )
 
-func CreateUser(email, password string) (string, error) {
+func CreateUser(email, password string) (*models.TokenDetails, error) {
 	ctx, cancle := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancle()
 
 	db, err := DB.ConnectDB()
 	if err != nil {
 		log.Println(err)
-		return "", err
+		return nil, err
 	}
 	defer db.Close()
 
@@ -25,11 +26,11 @@ func CreateUser(email, password string) (string, error) {
 	_, err = db.ExecContext(ctx, query, email, CryptoToPw(password))
 	if err != nil {
 		log.Println(err)
-		return "", err
+		return nil, err
 	}
-	token, err := token.CreateToken(email)
+	token, err := jwt.CreateToken(email)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 	return token, nil
 }
@@ -44,4 +45,3 @@ func CryptoToPw(pw string) string {
 
 	return mdStr
 }
-

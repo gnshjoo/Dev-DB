@@ -1,11 +1,12 @@
 package main
 
 import (
-	"github.com/gnshjoo/Dev-DB/handlers"
 	"github.com/gin-gonic/gin"
-
+	users "github.com/gnshjoo/Dev-DB/handlers"
+	"github.com/gnshjoo/Dev-DB/middleware"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+	"log"
 
 	_ "github.com/swaggo/gin-swagger/example/basic/docs"
 )
@@ -24,10 +25,11 @@ func main() {
 	// routes
 	v1 := r.Group("/v1")
 	{
-		v1.POST("/users/login", handlers.UserLogin)
-		v1.POST("/users/logout", handlers.UserLogout)
-		v1.POST("/users/signup", handlers.SignUp)
+		v1.POST("/users/login", users.UserLogin)
+		v1.POST("/users/logout", middleware.TokenAuthMiddleware(), users.UserLogout)
+		v1.POST("/users/signup", users.UserSignUp)
+		//v1.POST("/token/refresh", users.Refresh)
 	}
 
-	r.Run(":8080")
+	log.Fatal(r.Run(":8080"))
 }
