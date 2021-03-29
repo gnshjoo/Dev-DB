@@ -1,0 +1,8 @@
+basePath: /v1
+info:
+  contact: {}
+  description: this is Dev-DB API document
+  title: Dev-DB API Document
+  version: 0.0.1
+paths: {}
+swagger: "2.0"

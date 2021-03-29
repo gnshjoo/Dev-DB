@@ -1,0 +1,11 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "this is Dev-DB API document",
+        "title": "Dev-DB API Document",
+        "contact": {},
+        "version": "0.0.1"
+    },
+    "basePath": "/v1",
+    "paths": {}
+}
