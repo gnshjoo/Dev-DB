@@ -5,7 +5,7 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"github.com/gnshjoo/Dev-DB/DB"
-	"github.com/gnshjoo/Dev-DB/controllers/token"
+	jwt "github.com/gnshjoo/Dev-DB/controllers/token"
 	"github.com/gnshjoo/Dev-DB/models"
 	"log"
 	"time"
@@ -23,15 +23,20 @@ func CreateUser(email, password string) (*models.TokenDetails, error) {
 	defer db.Close()
 
 	query := `insert into users(email, password) values (? , ?)`
-	_, err = db.ExecContext(ctx, query, email, CryptoToPw(password))
+	res, err := db.ExecContext(ctx, query, email, CryptoToPw(password))
 	if err != nil {
 		log.Println(err)
 		return nil, err
 	}
-	token, err := jwt.CreateToken(email)
+	id, err := res.LastInsertId()
 	if err != nil {
 		return nil, err
 	}
+	token, err := jwt.CreateToken(uint64(id))
+	if err != nil {
+		return nil, err
+	}
+
 	return token, nil
 }
 

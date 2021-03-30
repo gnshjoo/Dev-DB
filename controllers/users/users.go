@@ -8,17 +8,17 @@ import (
 	"time"
 )
 
-func LoginUser(email, password string) (bool, error) {
+func LoginUser(email, password string) (*models.User, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
 	conn, err := DB.ConnectDB()
 	if err != nil {
 		log.Println(err)
-		return false, err
+		return nil, err
 	}
 
-	var u *models.User
+	var u models.User
 
 	query := `select id, email, password from users where email=? and password=?`
 
@@ -29,12 +29,12 @@ func LoginUser(email, password string) (bool, error) {
 		&u.Password,
 	)
 	if err != nil {
-		return false, err
+		return nil, err
 	}
 	if u.Email != "" {
-		return true, nil
+		return &u, nil
 	} else {
-		return false, nil
+		return nil, nil
 	}
 }
 

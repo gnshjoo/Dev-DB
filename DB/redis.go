@@ -25,7 +25,7 @@ func init() {
 	}
 }
 
-func CreateAuth(userid string, td *models.TokenDetails) error {
+func CreateAuth(userid uint64, td *models.TokenDetails) error {
 	at := time.Unix(td.AtExpires, 0) //converting Unix to UTC
 	rt := time.Unix(td.RtExpires, 0)
 	now := time.Now()

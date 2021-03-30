@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-func CreateToken(user string) (*models.TokenDetails, error) {
+func CreateToken(user uint64) (*models.TokenDetails, error) {
 	td := &models.TokenDetails{}
 	td.AtExpires = time.Now().Add(time.Minute * 15).Unix()
 	td.AccessUuid = uuid.NewV4().String()
@@ -21,9 +21,10 @@ func CreateToken(user string) (*models.TokenDetails, error) {
 
 	var err error
 
-	os.Setenv("ACCESS_SECRET", "alskdjfhg")
+	os.Setenv("ACCESS_SECRET", "asdlfkjsflkjsdfhsdf123")
 	atClaims := jwt.MapClaims{}
 	atClaims["authorized"] = true
+	atClaims["access_uuid"] = td.AccessUuid
 	atClaims["user_id"] = user
 	atClaims["exp"] = time.Now().Add(time.Hour * 24).Unix()
 	at := jwt.NewWithClaims(jwt.SigningMethodHS256, atClaims)
