@@ -1,4 +1,4 @@
-package users
+package handlers
 
 import (
 	"fmt"
@@ -13,6 +13,14 @@ import (
 	"strconv"
 )
 
+// @title UserLogin
+// @Description User Login and get access_token and refresh_token
+// @Accept json
+// @Produce json
+// @Param email body string true "email"
+// @Param password body string true "password"
+// @Success 200 {object} models.ResponseToken
+// @Router /v1/users/login [post]
 func UserLogin(c *gin.Context) {
 	var u *models.User
 	err := c.Bind(&u)
@@ -43,6 +51,13 @@ func UserLogin(c *gin.Context) {
 	return
 }
 
+// @title UserLogout
+// @Description User Logout (bearer token)
+// @Accept json
+// @Produce json
+// @Param Authorization body string true "token"
+// @Success 20 {object} string "Logout!"
+// @Router /v1/users/logout [post]
 func UserLogout(c *gin.Context) {
 	au, err := jwt.ExtractTokenMetadata(c.Request)
 	if err != nil || au == nil {
@@ -58,6 +73,14 @@ func UserLogout(c *gin.Context) {
 	return
 }
 
+// @title UserSignUp
+// @Description SignUp User
+// @Accept json
+// @Produce json
+// @Param email body string true "email"
+// @Param password body string true "password"
+// @Success 200 {object} models.ResponseToken
+// @Router /v1/users/signup [post]
 func UserSignUp(c *gin.Context) {
 	var u *models.User
 	err := c.Bind(&u)

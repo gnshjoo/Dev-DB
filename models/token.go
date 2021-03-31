@@ -13,3 +13,8 @@ type AccessDetails struct {
 	AccessUuid string
 	UserId     string
 }
+
+type ResponseToken struct {
+	AccessToken  string `json:"access_token"`
+	RefreshToken string `json:"refresh_token"`
+}

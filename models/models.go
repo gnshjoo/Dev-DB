@@ -13,4 +13,12 @@ type DataBaseList struct {
 	DBPass       string `json:"db_password"`
 	DBType       string `json:"db_type"`
 	Port         int    `json:"port"`
+	Host         string `json:"host"`
+	Status       bool   `json:"status"`
+}
+
+type DBDetail struct {
+	Database []string
+	DBVersion string
+
 }

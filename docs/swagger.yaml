@@ -1,8 +1,148 @@
 basePath: /v1
+definitions:
+  models.DBDetail:
+    properties:
+      database:
+        items:
+          type: string
+        type: array
+    type: object
+  models.DataBaseList:
+    properties:
+      db_name:
+        type: string
+      db_password:
+        type: string
+      db_type:
+        type: string
+      db_user:
+        type: string
+      host:
+        type: string
+      id:
+        type: integer
+      port:
+        type: integer
+      status:
+        type: boolean
+    type: object
+  models.ResponseToken:
+    properties:
+      access_token:
+        type: string
+      refresh_token:
+        type: string
+    type: object
 info:
   contact: {}
-  description: this is Dev-DB API document
-  title: Dev-DB API Document
+  title: Swagger Dev-DB
   version: 0.0.1
-paths: {}
+paths:
+  /v1/db/detail/:id:
+    get:
+      consumes:
+      - application/json
+      description: Get DB database list and detail
+      parameters:
+      - description: token
+        in: body
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.DBDetail'
+  /v1/db/list:
+    get:
+      consumes:
+      - application/json
+      description: Get DB List from database
+      parameters:
+      - description: token
+        in: body
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.DataBaseList'
+  /v1/users/login:
+    post:
+      consumes:
+      - application/json
+      description: User Login and get access_token and refresh_token
+      parameters:
+      - description: email
+        in: body
+        name: email
+        required: true
+        schema:
+          type: string
+      - description: password
+        in: body
+        name: password
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ResponseToken'
+  /v1/users/logout:
+    post:
+      consumes:
+      - application/json
+      description: User Logout (bearer token)
+      parameters:
+      - description: token
+        in: body
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "20":
+          description: Logout!
+          schema:
+            type: string
+  /v1/users/signup:
+    post:
+      consumes:
+      - application/json
+      description: SignUp User
+      parameters:
+      - description: email
+        in: body
+        name: email
+        required: true
+        schema:
+          type: string
+      - description: password
+        in: body
+        name: password
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ResponseToken'
 swagger: "2.0"
