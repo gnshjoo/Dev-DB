@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "module": "CommonJS",
+    "target": "ES6",
+    "esModuleInterop": true,
+    "typeRoots": [
+      "node_modules/@types",
+    ],
+  },
+  "include": [
+    "webpack/**/*.ts"
+  ],
+}

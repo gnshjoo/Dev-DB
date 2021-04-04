@@ -24,3 +24,9 @@ gen
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
+
+
+# for front
+front/node_modules
+front/build
+front/dist
