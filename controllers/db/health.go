@@ -36,6 +36,17 @@ func GetDatabase(ty, user, pw, host, port, dbName string) (models.DBDetail, erro
 	conn, err := sql.Open(ty, dns)
 	defer conn.Close()
 
+	if err != nil {
+		log.Println(err)
+		return dbl, err
+	}
+
+	err = conn.Ping()
+	if err != nil {
+		log.Println(err)
+		return dbl, err
+	}
+
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 

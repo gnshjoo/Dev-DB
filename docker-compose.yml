@@ -1,0 +1,31 @@
+version: '3.1'
+
+services:
+  db:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: gnshjoo12!@
+      MYSQL_DATABASE: DB
+      MYSQL_USER: gnshjoo
+      MYSQL_PASSWORD: gnshjoo12
+    ports:
+      - 3306:3306
+    volumes:
+      - [set computer]:/var/lib/mysql
+
+  redis:
+    image: redis
+    restart: always
+    command: redis-server --requirepass gnshjoo12!@ --port 6379
+    container_name: redis6379
+    hostname: redis6379
+    labels:
+      - "name=redis"
+      - "mode=standalone"
+    ports:
+      - 6379:6379
+    volumes:
+      - [set computer]:/data
+    environment:
+      - REQUIREPASS=gnshjoo12!@

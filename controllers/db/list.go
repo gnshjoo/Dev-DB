@@ -2,8 +2,10 @@ package db
 
 import (
 	"context"
+	"errors"
 	"github.com/gnshjoo/Dev-DB/DB"
 	"github.com/gnshjoo/Dev-DB/models"
+	"log"
 	"strconv"
 	"time"
 )
@@ -82,7 +84,8 @@ func DBDeatil(id string) (models.DBDetail, error) {
 	}
 	res, err := GetDatabase(u.DBType, u.DBUser, u.DBPass, u.Host, strconv.Itoa(u.Port), u.DatabaseName)
 	if err != nil {
-		return db, err
+		log.Println(err)
+		return db, errors.New("connect failed")
 	}
 
 	return res, nil

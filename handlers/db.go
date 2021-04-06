@@ -46,7 +46,7 @@ func GetDBDetail(c *gin.Context) {
 
 	res, err := db.DBDeatil(id)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, err)
+		c.JSON(http.StatusInternalServerError, err.Error())
 		return
 	}
 	c.JSON(http.StatusOK, res)
